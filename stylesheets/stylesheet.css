@@ -95,12 +95,12 @@ h6 {
 
 p {
   margin: 10px 0 15px 0;
-  width: 750px;
+  width: 660px;
   align: justify;
 }
 
 .text_width {
- width: 750px;
+ width: 640px;
 }
 p.thick {
   font-weight: bold;
