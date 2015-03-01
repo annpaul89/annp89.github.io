@@ -23,29 +23,69 @@
 
         </header>
     </div>
+     <!-- MAIN CONTENT -->
+    <div class="main_content_wrap outer">
+      <section class="main_content inner">
+        <h2>Scraping Web Content</h2>
+        <a id="february-28-2015" class="anchor" href="#february-28-2015" aria-hidden="true"><span class="octicon octicon-link"></span></a>February 28, 2015</h3>
+
+        <p>I got to work with a friend on using python libraries to scrape data from a Pokemon website
+            [http://bulbapedia.bulbagarden.net/wiki/].
+            Since there's a lot of data and numbers associated with it,
+            I thought it'd be fun to look into and explore. [Disclaimer: I do not play Pokemon and the most I know is that
+            Pikachu is a very famous(?) Pokemon]</p>
+
+        <p>The python packages needed are: <code>lxml</code> for HTML parsing and <code>urllib</code>
+            to access the url as a HTML response.<p>
+        <code>url = {url_name} <br>
+            response = urllib.urlopen(url) <br>
+            data = response.read() <br>
+            tree = html.fromstring(data) <br>
+        </code>
+        <p>Essentially, we need to access the DOM element from which we want to scrap data using the xpath that leads to it. So if you've ever stumbled upon this path, </p>
+        <p class="thick">Right click web-page -> Inspect Element -> Right on the HTML for the element you are searching, you'll notice an option called ->'Copy Xpath'.</p>
+        <p>Unfortunately, it won't work in some cases where the content you are searching for is in within a <code>table</code> tag.
+        On inspecting the xpath, I noticed the <code>tbody</code> tag, which are tags inserted
+        by the browser when not specified in the source code. So, I had to restructure the path, removing the tbody tags. </p>
+        <p>
+        Here's the xpath information for accessing a span element whose id is By_leveling_up, going up to the parent node, accessing a sibling node
+          and then traversing down 2 nested tables using indexes and accessing the content from the td element at index 13 for all the tr elements in
+          that table.
+        </p>
+
+         <pre class="text_width"> tree.xpath('//span[@id="By_leveling_up"]/../following-sibling::table[1]/tr[2]/td[1]/table[1]/tr/td[13]/a/span/text()')</pre>
+
+
+
+
+      </section>
+    </div>
 
     <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-            <a id="february-21-2015" class="anchor" href="#february-21-2015" aria-hidden="true"><span class="octicon octicon-link"></span></a>February 21, 2015</h3>
+    <div class="main_content_wrap outer">
+      <section class="main_content inner">
+        <h2>Fun with Shell Scripting</h2>
+        <a id="february-21-2015" class="anchor" href="#february-21-2015" aria-hidden="true"><span class="octicon octicon-link"></span></a>February 21, 2015</h3>
 
-            <p>After my early morning run at 7 a.m., I was inspired to use and setup a github page for my profile; so here goes. I hope to update this page psuedo blog style page with code snippets or interesting links that I come across.</p>
-
-            <p>For today, I wanted to include a calendar here to kinda mark when I started. I defaulted to use the simplest shell script that I thought of : <code>$ CAL</code> </p>
-            <div id="screen_shot">
-              <img src='./images/cal_uc_shell_script.png'>
-            </div>
-            <p>Oops, CAPS lock was turned on. It gave me an interesting result with the days oriented vertically, not what I wanted though. Try 2 : <code>$ cal</code></p>
-            <div id="screen_shot">
-              <img src='./images/cal_lc_shell_script.png'>
-            </div>
-            <p>Hmm, I thought it would highlight "today". I was suprised to find out that <code>cal</code> in OSX <strong>doesn't</strong> highlight today by default. So, here's where I learnt a cool new script to make highlighting work!</p>
-              <code>$cal | grep -C3 --color "$(date +%d)"</code>
-            <div id="screen_shot">
-              <img src='./images/cal_highlight_script.png'>
-            </div>
-            <p>Oh, I created an alias for it as well.</p> <code>$alias today='cal | grep -C3 --color "$(date +%d)"'</code>
+        <p>After my early morning run at 7 a.m., I was inspired to use and setup a github page for my profile; so here goes.
+            I hope to update this page psuedo blog style page with code snippets or interesting links that I come across.</p>
+        <p>For today, I wanted to include a calendar here to kinda mark when I started.
+            I defaulted to use the simplest shell script that I thought of : <code>$ CAL</code> </p>
+        <div id="screen_shot_1">
+            <img src='./images/cal_uc_shell_script.png'>
+        </div>
+        <p>Oops, CAPS lock was turned on. It gave me an interesting result with the days oriented vertically, not what I wanted though.
+            Try 2 : <code>$ cal</code></p>
+        <div id="screen_shot_2">
+            <img src='./images/cal_lc_shell_script.png'>
+        </div>
+        <p>Hmm, I thought it would highlight "today". I was suprised to find out that <code>cal</code> in OSX <strong>doesn't</strong> highlight today by default.
+            So, here's where I learnt a cool new script to make highlighting work!</p>
+            <code>$cal | grep -C3 --color "$(date +%d)"</code>
+        <div id="screen_shot_3">
+            <img src='./images/cal_highlight_script.png'>
+        </div>
+        <p>Oh, I created an alias for it as well.</p> <code>$alias today='cal | grep -C3 --color "$(date +%d)"'</code>
       </section>
     </div>
 
