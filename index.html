@@ -56,10 +56,6 @@
          <pre> tree.xpath('//span[@id="By_leveling_up"]/../following-sibling::table[1]/
              tr[2]/td[1]/table[1]/tr/td[13]/a/span/text()')</pre>
         <p>
-
-
-
-
       </section>
     </div>
 
@@ -91,6 +87,30 @@
       </section>
     </div>
 
+
+    <!-- MAIN CONTENT -->
+    <div class="main_content_wrap outer">
+      <section class="main_content inner">
+        <h2>Direction to path intersection</h2>
+        <a id="february-15-2014" class="anchor" href="#february-15-2014" aria-hidden="true"><span class="octicon octicon-link"></span></a>February 15, 2014</h3>
+
+        <p>After having played more with the algorithm to identify if paths(lines) intersect, I was curious to figure out based on the angle made at the point of intersection if a sense of direction could be attributed to the path<p></p> For instance, if the path intersects from left to right or right to left in relation to the x axis.</p>
+        <p> A quick and dirty solution is just using <code>arctan</code> to find the angle at the point of intersection. If positive, the angle was made in the 1st or 2nd quadrant which signifies where the origin of the path lies. Else, the angle was made in the 3rd or 4th quadrant.
+        <p>
+        For instance, consider a line represented by line_start,line_end each a tuple of ints[x,y] and a path that intersect the line represented by path_start, path_end which is also a tuple of ints. 
+        Here below is the code in python using library <code>math</code>
+
+          <pre>
+            xdiff = line_start[0]-path_start[0]
+            ydiff = line_start[1]-path_start[1]
+            if degrees(atan2(ydiff, xdiff)) > 0:
+                left_to_right += 1
+            else:
+                right_to_left += 1
+          </pre>
+      </section>
+    </div>
+
     <!-- MAIN CONTENT -->
     <div class="main_content_wrap outer">
       <section class="main_content inner">
@@ -100,7 +120,7 @@
         <p>In one of the projects I was working on, I was given a task to calculate the total number of paths(lines) that cross another line. This could be further broken down into finding the number of intersections made with the line of interest.</p>
 
         <p>Let me begin by explaining the solution before including Python.</p>
-        <code>Reference: http://compgeom.cs.uiuc.edu/~jeffe/teaching/373/notes/x06-sweepline.pdf </code></br><h5> Explanation: </h5> 
+        <pre>Src: <a href="http://compgeom.cs.uiuc.edu/~jeffe/teaching/373/notes/x06-sweepline.pdf">http://compgeom.cs.uiuc.edu/~jeffe/teaching/373/notes/x06-sweepline.pdf</a></pre></br><h5> Explanation: </h5> 
         <p>Given 2 lines AB and CD, they intersect if and only if A and B are separated by segment CD and vice-versa. If so, ACD and BCD should have opposite orientation which means only one can be counterclockiwise.</p>
         <p>Determining the orientation of points can be done by using slopes. If slope of AB is less than AC, then ABC are listed in the counterclockwise order. </p>
         
