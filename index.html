@@ -69,6 +69,30 @@ layout: default
 <!-- MAIN CONTENT -->
 <div class="main_content_wrap outer">
   <section class="main_content inner">
+    <h2>Querystring creation using Jquery.param </h2>
+    <a id="february-24-2014" class="anchor" href="#february-24-2014" aria-hidden="true"><span class="octicon octicon-link"></span></a>February 24, 2014</h3>
+
+    <p>Being a backend engineer, I didn't seem to care too much about best practices when coding in Jquery or any front end technology for that matter<p></p> It, in most cases, made my code bulky and error prone. This was easily obvious when I refactored a simple implementation of serializing params to create a queyrstring.</p>
+    <pre>
+        var startParam = 'start=' + start,
+            stopParam = 'stop=' + stop,
+            dateParam = 'date=' + date,
+            params = startParam + '&' + stopParam + '&' + dateParam;
+    </pre>
+    <p>Since this serialization is done by pure string formatting, there can be edge cases where an & or other characters that need to be escaped are passed in the query string. Why bother when there are libraries for this purpose :) I went ahead and refactored it by using <code> jquery.param</code> </p>
+
+      <pre>
+        var paramsDict = { startParam: start,
+                            stopParam: stop,
+                            dateParam: date };
+        var params = $.param( paramsDict );
+      </pre>    
+  </section>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main_content_wrap outer">
+  <section class="main_content inner">
     <h2>Path direction </h2>
     <a id="february-15-2014" class="anchor" href="#february-15-2014" aria-hidden="true"><span class="octicon octicon-link"></span></a>February 15, 2014</h3>
 
