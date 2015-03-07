@@ -91,6 +91,28 @@
       </section>
     </div>
 
+    <!-- MAIN CONTENT -->
+    <div class="main_content_wrap outer">
+      <section class="main_content inner">
+        <h2>Finding if 2 lines intersect given their coordinates</h2>
+        <a id="february-14-2014" class="anchor" href="#february-14-2014" aria-hidden="true"><span class="octicon octicon-link"></span></a>February 14, 2014</h3>
+
+        <p>In one of the projects I was working on, I was given a task to calculate the total number of paths(lines) that cross another line. This could be further broken down into finding the number of intersections made with the line of interest.</p>
+
+        <p>Let me begin by explaining the solution before including Python.</p>
+        <code>Reference: http://compgeom.cs.uiuc.edu/~jeffe/teaching/373/notes/x06-sweepline.pdf </code></br><h5> Explanation: </h5> 
+        <p>Given 2 lines AB and CD, they intersect if and only if A and B are separated by segment CD and vice-versa. If so, ACD and BCD should have opposite orientation which means only one can be counterclockiwise.</p>
+        <p>Determining the orientation of points can be done by using slopes. If slope of AB is less than AC, then ABC are listed in the counterclockwise order. </p>
+        
+        <pre>def ccw(A,B,C): 
+        return (B[1]-A[1])/(B[0]-A[0]) < (C[1]-A[1])/(C[0]-A[0])  
+        </pre></p>
+        <pre>def intersect(A,B,C,D):
+        return ccw(A,C,D) != ccw(B,C,D) and ccw(A,B,C) != ccw(A,B,D)
+        </pre>
+      </section>
+    </div>
+
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
