@@ -71,7 +71,7 @@ layout: default
     <h2>Unzip a file in-memory, add content, and zip it back up</h2>
     <a id="may-6-2014" class="anchor" href="#may-6-2014" aria-hidden="true"><span class="octicon octicon-link"></span></a>May 6, 2014</h3>
 
-    <p>As a part of making the deployment process easy, I was involved in a project where our software needed to be prefilled with authentication credentials per customer basis. All this functionality had to be implemented at the view level which required the file to be unzipped into a memory buffer, modified and zipped back. This needed 2 iterations<p></p> Python has a very useful <code>zipfile<code> library for this purpose to read/write zipped files in memory.</p>
+    <p>As a part of making the deployment process easy, I was involved in a project where our software needed to be prefilled with authentication credentials per customer basis. All this functionality had to be implemented at the view level which required the file to be unzipped into a memory buffer, modified and zipped back. This needed 2 iterations<p></p> Python has a very useful <code>zipfile</code> library for this purpose to read/write zipped files in memory.</p>
     <pre>
 zipped_file # This contains the zipped file
 file_content_buffer = StringIO() # in_memory buffer
