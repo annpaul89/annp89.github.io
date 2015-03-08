@@ -1,0 +1,26 @@
+---
+layout: post
+title: Path direction
+date: February 15, 2014
+date_title: february-15-2014
+day: 15
+month: 2
+year: 2014
+---
+<!-- MAIN CONTENT -->
+
+
+    <p>After having played more with the algorithm to identify if paths(lines) intersect, I was curious to figure out based on the angle made at the point of intersection if a sense of direction could be attributed to the path<p></p> For instance, if the path intersects from left to right or right to left in relation to the x axis.</p>
+    <p> A quick and dirty solution is just using <code>arctan</code> to find the angle at the point of intersection. If positive, the angle was made in the 1st or 2nd quadrant which signifies where the origin of the path lies. Else, the angle was made in the 3rd or 4th quadrant.
+    <p>
+    For instance, consider a line represented by line_start,line_end each a tuple of ints[x,y] and a path that intersect the line represented by path_start, path_end which is also a tuple of ints. 
+    Here below is the code in python using library <code>math</code>
+
+      <pre>
+        xdiff = line_start[0]-path_start[0]
+        ydiff = line_start[1]-path_start[1]
+        if degrees(atan2(ydiff, xdiff)) > 0:
+            left_to_right += 1
+        else:
+            right_to_left += 1
+      </pre>

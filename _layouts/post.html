@@ -1,15 +1,14 @@
----
-layout: default
----
-<div class="post">
+{% include header.html %}
 
-  <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
-    <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
-  </header>
+	{% include nav.html %}
+	<div class="main_content_wrap outer">
+		  <section class="main_content inner">
+				<h2>{{ page.title }}</h2>
+		    	<a id="{{ page.date_title }}" class="anchor" href="#{{ page.date_title }}" aria-hidden="true"><span class="octicon octicon-link"></span></a>{{ page.date }}</h3>
+		    	{{ content }}
 
-  <article class="post-content">
-    {{ content }}
-  </article>
+		  </section>
+	</div>
 
-</div>
+
+{% include footer.html %}

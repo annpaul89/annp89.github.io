@@ -1,0 +1,31 @@
+---
+layout: post
+title: Fun with Shell Scripting
+date: February 1, 2015
+date_title: february-1-2015
+day: 1
+month: 2
+year: 2015
+---
+<!-- MAIN CONTENT -->
+
+
+    <p>After my early morning run at 7 a.m., I was inspired to use and setup a github page for my profile; so here goes.
+        I hope to update this page psuedo blog style page with code snippets or interesting links that I come across.</p>
+    <p>For today, I wanted to include a calendar here to kinda mark when I started.
+        I defaulted to use the simplest shell script that I thought of : <code>$ CAL</code> </p>
+    <div id="screen_shot_1">
+        <img class="text_width" src='./images/cal_uc_shell_script.png'>
+    </div>
+    <p>Oops, CAPS lock was turned on. It gave me an interesting result with the days oriented vertically, not what I wanted though.
+        Try 2 : <code>$ cal</code></p>
+    <div id="screen_shot_2">
+        <img class="text_width" src='./images/cal_lc_shell_script.png'>
+    </div>
+    <p>Hmm, I thought it would highlight "today". I was suprised to find out that <code>cal</code> in OSX <strong>doesn't</strong> highlight today by default.
+        So, here's where I learnt a cool new script to make highlighting work!</p>
+        <code>$cal | grep -C3 --color " $(date +%-d)"</code>
+    <div id="screen_shot_3">
+        <img class="text_width" src='./images/cal_highlight_script.png'>
+    </div>
+    <p>Oh, I created an alias for it as well.</p> <code>$alias today='cal | grep -C3 --color " $(date +%-d)"'</code>
