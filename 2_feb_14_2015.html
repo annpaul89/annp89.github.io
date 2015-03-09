@@ -1,0 +1,52 @@
+---
+layout: post
+title: Split a number into 4 and randomize the order
+date: February 14, 2015
+date_title: february-14-2015
+day: 14
+month: 2
+year: 2015
+---
+<!-- MAIN CONTENT -->
+    <p>As part of creating a tool to edit aggregate data by the hour, I came across an interesting problem when trying to split the total into 4 bukcets for each hour. </p>
+    <ol> <li> How do we handle numbers that are not divisible by 4</li>
+        <li> If the number is less than four, do we just set the last three buckets to 0 </li>
+        <li> How can we create some variation so the patterns dont look alike, i.e., the intial buckets have higher numbers than the lower buckets</li>
+    </ol>
+
+    So I came up with the solution after couple of iterations.
+    First, the quick and easy solution. Divide the number by 4. If there's a remainder add it to the last bucket.
+
+    <pre>
+        sub_count = total_count/4
+        rem_count = total_count%4
+
+        counts = [sub_count]*3+[sub_count+rem_count]
+    </pre>
+    This works but always makes the last bucket have a larger count which makes the distribution of counts generated almost uniform. This led to trying to randomize which bucket was gonna by selected.
+    <pre>
+
+        count_list = defaultdict(list)
+        choices = [0, 1, 2, 3]
+
+        for i in xrange(0, total_count):
+            count_list[random.choice(choices)].append(i)
+
+        result_count_list = [len(count) for index, count in count_list.iteritems()]
+
+        # For lower total_count, pad 0s
+        if len(result_count_list) != 4:
+            result_count_list += [0] * (4-len(result_count_list))
+
+        return result_count_list
+    </pre>
+
+    Ugh! A lot of fluff. Why not just <strong>initialize the list with 0s</strong> ? 
+
+    <pre> 
+        count_list = [0] * 4
+        for r in xrange(total_count):
+            count_list[random.randrange(0, 4)] += 1
+        return count_list
+    </pre>
+    
