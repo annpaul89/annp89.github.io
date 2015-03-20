@@ -23,7 +23,4 @@ year: 2015
     <p>Hmm, I thought it would highlight "today". I was suprised to find out that <code>cal</code> in OSX <strong>doesn't</strong> highlight today by default.
         So, here's where I learnt a cool new script to make highlighting work!</p>
         <code>$cal | grep -C3 --color " $(date +%-d)"</code>
-    <div id="screen_shot_3">
-        <img class="text_width" src='./images/cal_highlight_script.png'>
-    </div>
     <p>Oh, I created an alias for it as well.</p> <code>$alias today='cal | grep -C3 --color " $(date +%-d)"'</code>
