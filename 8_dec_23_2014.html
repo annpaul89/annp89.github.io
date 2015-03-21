@@ -1,0 +1,103 @@
+---
+layout: post
+title: Separating inherited models in Django using South migrations
+date: December 23, 2014
+date_title: december-23-2014
+day: 23
+month: 12
+year: 2014
+---
+<!-- MAIN CONTENT -->
+    <p>The way models are inherited in Django is such that the inherited model maintains a pointer to the parent model using the parent's primary key to maintain foreign key relationships. It also doesnt duplicate the fields in the inherited model. This makes it difficult when you want to losslessly separate out models so that they retain all it's attributes and relationships to other models in an efficient, non-blocking way.</p>
+
+    <p>Consider you have 2 models of the following form:</p>
+    <pre>
+        class A(models.Model):
+            name = models.CharField()
+        class B(A):
+            number = models.IntergerField()
+    </pre>
+    
+    <p>Some things to keep in mind are:
+        <ul>
+            <li>The attributes of the parent model have to be 
+                duplicated. </li>
+            <li><p> <em>Model A</em> has several foreign key relationships that have to be maintained in Model B.</p></li>
+            <li><p> There should not be any primary key conflict during the migration(splitting of the model).</p></li>
+        </ul>
+    </p>
+
+    <p> It took me four migrations to perform the entire change.</p>
+    <p> 
+        <ol>
+            <li>Duplicate the attributes with a temporary name in the child model.</li>
+            <li>Since the child objects still have a pointer to the parent model, we duplicate the values for every instance, into the temporary fields that were added onto the model.</li>
+            <li>
+                <ul>
+                    <li>Alter and set the ptr foreign key to the parent model to a regular Interger Field with<code>blank=True</code></li>
+                    <li>Rename the ptr field to <code>id</code></li>
+                    <li>Now to create a sequence for the id for the objects that get created after the migration. The sequence should start from the <code>max(id)</code> of the parent model to prevent any chance of collision. </li>
+                    <li>Finally assign the created sequence as the default nextval for the column <code>id</code></li> 
+                </ul>
+            </li>
+            <li>Since there is no pointer to the parent table, there no longer are any of the parent model fields on Model B. So, we can now rename the temporary fields to that of the parent model.</li>
+            <li> Now that the models are separated, all the objects of Model A with an id equal to that of Model B, can be safely deleted. This deletes the objects that earlier held the data of Model B and is now completely separated out.</li>
+        </ol>
+
+        <p>Im gonna add some code snippets specific to my project here, for giving an idea of how it was implemented. </p>
+        <ul>
+            <p>
+<pre>
+class Migration(SchemaMigration):
+
+    def forwards(self, orm):
+        #Adding field 'B.b_name'
+        db.add_column(u'B', 'b_name', self.gf('django.db.models.fields.CharField')(blank=True)
+</pre>
+            </p>
+
+            <p>
+<pre>
+class Migration(SchemaMigration):
+
+    def forwards(self, orm):
+        b_objects = list(B.objects.all())
+        for b_object in b_objects:
+            b_object.b_name = b_object
+            b_object.save()
+</pre>
+            </p>
+
+            <p>
+<pre>
+class Migration(SchemaMigration):
+    # Changing field 'B.a_ptr_id'
+    db.alter_column(u'B', 'a_ptr_id', self.gf('django.db.models.fields.IntegerField')(blank=True)
+
+    # Renaming field 'B.a_ptr'
+    db.rename_column(u'B', 'a_ptr_id', 'id')
+
+    # Setting id as the primary key for B
+    # with a value sequence that follows the max id on A.
+    db.execute("CREATE SEQUENCE b_id_seq")
+    db.execute("SELECT setval('b_id_seq', (SELECT MAX(id) FROM A))")
+    db.execute("ALTER TABLE B ALTER COLUMN id SET DEFAULT nextval('b_id_seq'::regclass)")
+</pre>
+            </p>
+            <p>
+<pre>
+class Migration(SchemaMigration):
+
+    def forwards(self, orm):
+        # Renaming field 'PartnerAccount.pa_signup_completed_at'
+        db.rename_column(u'B', 'b_name', 'name')
+</pre>
+            </p>
+        </ul>
+    </p>
+
+
+
+
+
+    
