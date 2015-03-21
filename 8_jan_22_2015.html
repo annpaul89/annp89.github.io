@@ -1,0 +1,61 @@
+---
+layout: post
+title: Unit testing in Django to mock timestamps
+date_title: january-22-2015
+day: 22
+month: 1
+year: 2015
+---
+<!-- MAIN CONTENT -->
+
+  
+<p>
+   Given a path of ((x1, y1), (x2, y2), ... (xn, yn)), finding the sum of the angle between consecutive line segments of the path
+    in radians will give an idea of how variance a path has. 
+</p>
+<p>This helps to differentiate <em>jagged and squiggly paths </em>from lengthier and more leveled paths. This allows us to filter out noise or paths that we want to tailor to different use cases.
+</p>
+<pre>       
+def get_total_angle(path):
+    total_angle = 0.0
+
+    for i in xrange(len(path)-2):
+        point1 = path[i]
+        point2 = path[i+1]
+        point3 = path[i+2]
+
+        angle = find_angle(point1, point2, point3)
+        total_angle += angle
+    return total_angle
+
+</pre>
+</p>
+<p>
+    In order to find the angle, I first went down the path of using the law of cosines and the in-built <code>math</code> library. Unfortunately, that didnt quite pan out since I kept running into issues of numeric instability. This is where the magic of scientific libraries in python like <strong>numpy</strong>, make our lives so much easier.
+    </p>
+<p>
+<pre>
+def find_angle(point_a, point_b, point_c):
+    """
+    Expects arguments to be a list or tuple of length 2
+    Returns the angle made at point_b in radians
+    """
+    # Any or all points are the same
+    if point_a == point_b or point_b == point_c or point_a == point_c:
+        return 0
+
+    angle = (numpy.arctan2(point_c[0] - point_b[0], point_c[1] - point_b[1]) -
+             numpy.arctan2(point_a[0] - point_b[0], point_a[1] - point_b[1]))
+
+    if angle &gt; numpy.pi:
+        return numpy.absolute(2 * numpy.pi - angle)
+
+    if angle &lt; -numpy.pi:
+        return numpy.absolute(2 * numpy.pi + angle)
+    return numpy.absolute(angle)
+
+</pre>
+</p>
+
+
+    
