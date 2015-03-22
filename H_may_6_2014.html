@@ -8,10 +8,10 @@ month: 5
 year: 2014
 ---
 <!-- MAIN CONTENT -->
-
-
-    <p>As a part of making the deployment process easy, I was involved in a project where our software needed to be prefilled with authentication credentials per customer basis. All this functionality had to be implemented at the view level which required the file to be unzipped into a memory buffer, modified and zipped back. This needed 2 iterations<p></p> Python has a very useful <code>zipfile</code> library for this purpose to read/write zipped files in memory.</p>
-    <pre>
+<p>
+    As a part of making the deployment process easy, I was involved in a project where our software needed to be prefilled with authentication credentials per customer basis. All this functionality had to be implemented at the view level which required the file to be unzipped into a memory buffer, modified and zipped back. This needed 2 iterations<p></p> Python has a very useful <code>zipfile</code> library for this purpose to read/write zipped files in memory.
+</p>
+<pre>
 zipped_file # This contains the zipped file
 file_content_buffer = StringIO() # in_memory buffer
 config_filepath = '/sample.conf'
@@ -32,10 +32,11 @@ response['Content-Disposition'] = ('attachment;
                                   filename=custom_zipped_file.zip')
 response['Content-Type'] = 'application/x-zip'
 return response
-    </pre>
-    <p>This worked well until I tested it out, only to find out that several of the <strong>symlinks</strong> within the zipped file dont get copied over. They appear as broken files with 0kb size. After a lot of research, it looks like the file properites dont get preserved hence rendering the file broken. This also manifests in the created timestamp where it's set to epoch 0. So, the following changes had to keep the file in tact.
+</pre>
+<p>
+    This worked well until I tested it out, only to find out that several of the <strong>symlinks</strong> within the zipped file dont get copied over. They appear as broken files with 0kb size. After a lot of research, it looks like the file properites dont get preserved hence rendering the file broken. This also manifests in the created timestamp where it's set to epoch 0. So, the following changes had to keep the file in tact.
 
-      <pre>
+<pre>
 with ZipFile(zipped_file, 'r') as zipread:
     with ZipFile(file_content_buffer, 'w', ZIP_DEFLATED) as zipwrite:
         for item in zipread.infolist():
@@ -57,4 +58,4 @@ with ZipFile(zipped_file, 'r') as zipread:
                 data = zipread.read(item.filename)
                 zipwrite.writestr(dest, data)
 file_content_buffer.seek(0)
-      </pre>  
+</pre>  

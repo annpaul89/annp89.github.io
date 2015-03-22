@@ -1,0 +1,46 @@
+---
+layout: post
+title: Scraping Web Content
+date: February 28, 2015
+date_title: february-28-2015
+day: 28
+month: 2
+year: 2015
+---
+<!-- MAIN CONTENT -->
+<p>
+    Today, I got to work with a friend to use Python libraries to scrape data from a Pokemon website
+    [http://bulbapedia.bulbagarden.net/wiki/].
+    Since there's a lot of data and numbers associated with it,
+    I thought it'd be fun to look into and explore. [Disclaimer: I do not play Pokemon and the most I know is that
+    Pikachu is a very famous(?) Pokemon]
+</p>
+
+<p>
+    The python packages needed are: <code>lxml</code> for HTML parsing and <code>urllib</code>
+    to access the url as a HTML response.
+<p>
+<code>url = {url_name} <br>
+    response = urllib.urlopen(url) <br>
+    data = response.read() <br>
+    tree = html.fromstring(data) <br>
+</code>
+<p>
+    Essentially, we need to access the DOM element from which we want to scrap data using the xpath that leads to it. So if you've ever stumbled upon this path, 
+</p>
+<p class="thick">
+    Right click web-page -> Inspect Element -> Right on the HTML for the element you are searching, you'll notice an option called ->'Copy Xpath'.
+</p>
+<p>
+    Unfortunately, it won't work in some cases where the content you are searching for is in within a <code>table</code> tag.On inspecting the xpath, I noticed the <code>tbody</code> tag, which are tags inserted
+by the browser when not specified in the source code. So, I had to restructure the path, removing the tbody tags. 
+</p>
+<p>
+Here's the xpath information for accessing a span element whose id is "By_leveling_up", going up to the parent node, accessing a sibling node
+  and then traversing down 2 nested tables using indexes and accessing the content from the td element at index "13" for all the tr elements in
+  that table.
+</p>
+<p class="text_width">
+ <pre> tree.xpath('//span[@id="By_leveling_up"]/../following-sibling::table[1]/
+     tr[2]/td[1]/table[1]/tr/td[13]/a/span/text()')</pre>
+</p>

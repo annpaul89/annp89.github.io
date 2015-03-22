@@ -1,0 +1,28 @@
+---
+layout: post
+title: Shell scripts that I regularly use
+date: January 20, 2014
+date_title: january-20-2014
+day: 20
+month: 1
+year: 2014
+---
+<!-- MAIN CONTENT -->
+<p>Navigating through the codebase is not always easy, especially when you are new to it. A few shell scripts that come in handy are: </p>
+<p><code>grep -RHni '{search_term}' .</code></p>
+<p> Searches for the "search_term" in the current directory and all it's child directories. It returns the <em>path to the file, line number of occurence in the file and the summary of the line that contains the "search_term" </em> </p>
+
+<p><code>grep -RHni --exclude-dir='{directory_name}' '{search_term}' .</code></p>
+<p>A modification that I use while programming using the current Django framework, when I want to <em>skip or exclude</em> the matches in the migration directory is specifying "south_migrations" as the directory name. It skips over all the files in any folder that matches that name.</p>
+
+<p><code>ps aux | grep '{search_term}'</code></p>
+<p><code>kill -9 {pid}</code></p>
+<p>In cases where my server hangs, I use the "ps aux" to list out all the processes that match with the 'search_term', in my case 'django'. Once I find the processes, I identify the <em>pid</em> and I use the kill command on it.</p>
+
+<p><code>ls -la</code></p>
+<p>List all the files inclusive of hidden files.</p>
+
+<p><code>rm -rf</code></p>
+<p>Force deletes the file/directory.</p>
+
+
