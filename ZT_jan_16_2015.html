@@ -21,6 +21,36 @@ with patch('app_name.datetime') as mock_date:
 <p> But the drawback, that block has to be repeated in eery test.</p>
 <p> The only way to truly make this more generic and DRY is to sublcass the built-in package you want to mock and sub-class you Test cases from that class.
 </p>
+<pre>
+from datetime import datetime
+from mock import patch
 
+from django.test import TestCase
+
+
+class MockedDatetimeTestCase(TestCase):
+    """
+    Helper testcase to freeze datetime 
+    """
+    mocked_utcnow = datetime(2014, 12, 8, 3, 0)
+
+    class MockedDatetime(datetime):
+        """A python builtin cannot be easily mocked,
+        so we're subclassing datetime and patching that instead.
+        """
+        @classmethod
+        def utcnow(cls):
+            return MockedDatetimeTestCase.mocked_utcnow
+
+    def setUp(self):
+        patcher = patch('app_name.datetime', self.MockedDatetime)
+        self.addCleanup(patcher.stop)
+        patcher.start()
+</pre>
+
+<p>
+	You may have noticed that the <code> patcher.stop </code> is called in the setUp() class instead of the tearDown(). 
+	This is because, in Django, the tearDown is not <em>guaranteed</em> to be called.
+</p>
 
     
