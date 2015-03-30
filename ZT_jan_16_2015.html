@@ -9,9 +9,18 @@ year: 2015
 ---
 <!-- MAIN CONTENT -->
 <p>
-   Unit testing is very important for confidence in your implementation and early detection of flaws. I've always 
+   Unit testing is very important for confidence in your implementation and early detection of flaws. In case where you want to set some state to unit tests in django where your implementation is dependant on it, the <code>mock</code> library comes in handy.
 </p>
 <p>
-	This helps to differentiate <em>jagged and squiggly paths </em>from 
+	This becomes tricky when you try to mock python's in built libraries, like for instance <code>datetime</code>. If you try to use a decorator a class or method, you'll run into a <strong>TypeError</strong>: can't set attributes of built-in/extension type datetime.datetime. To get around this, I used a <code>with</code> block.
+</p>
+<pre>
+with patch('app_name.datetime') as mock_date:
+        mock_date.utcnow.return_value = UTC_NOW
+</pre>
+<p> But the drawback, that block has to be repeated in eery test.</p>
+<p> The only way to truly make this more generic and DRY is to sublcass the built-in package you want to mock and sub-class you Test cases from that class.
+</p>
+
 
     
