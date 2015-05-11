@@ -1,0 +1,42 @@
+---
+layout: post
+title: Upgrade to postgres 9.4 on a vagrant machine
+date: March 10, 2015
+date_title: march-10-2015
+day: 10
+month: 3
+year: 2015
+---
+<!-- MAIN CONTENT -->
+
+  
+<p>
+   In the vagrant script for provisioning a db, I would suggest to just maintain the <em>install</em> script and not the upgrade script since it's easier to maintain and removes the need for unnecessary cleanup later.
+</p>
+<p>
+	So, the line to include would be 
+	<code>sudo apt-get install --yes --force-yes -y postgresql-9.4</code>
+</p>
+<p>
+	On the other hand, if you want to preserve data in your vagrant box and do an upgrade without loss of data, you can use the following steps.
+</p>
+<pre>
+# install new version
+sudo apt-get install --yes --force-yes -y postgresql-9.4
+
+sudo service postgresql stop
+
+#upgrade postgres
+sudo su -l postgres
+/usr/lib/postgresql/9.4/bin/pg_upgrade -b /usr/lib/postgresql/9.3/bin -B 
+/usr/lib/postgresql/9.4/bin -d 
+/var/lib/postgresql/9.3/main/ -D /var/lib/postgresql/9.4/main/ -O " -c config_file=/etc/postgresql/9.4/main/postgresql.conf" -o " -c config_file=/etc/postgresql/9.3/main/postgresql.conf"
+exit
+
+sudo apt-get remove postgresql-9.3
+
+# a little brute force but does the trick
+sudo sed -i.bak 's/5433/5432/g' /etc/postgresql/9.3/main/postgresql.conf
+
+sudo service postgresql restart
+</pre> 
