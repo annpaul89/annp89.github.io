@@ -1,0 +1,45 @@
+---
+layout: post
+title: Facts about python
+date: February 27, 2015
+date_title: february-27-2015
+day: 27
+month: 2
+year: 2015
+---
+<!-- MAIN CONTENT -->
+<p><ol>
+    <span>
+       <li> Immutability: <pre>
+        x=23 
+        y=x 
+        x=2</pre> But <code>y</code> is still<strong> 23</strong>  </li> 
+    </br>
+<li> Memory is managed dynamically, </br>
+<pre>
+    x= 'hello'
+    x= 'world'
+</pre> 
+                (Values live until reference dies) </br> 'hello' is cleaned up since it no longer has a reference. 
+</br> 
+<li><strong>Mutable aliasing</strong> Assignment never copies data, it simply creates ref</br>
+<pre>
+a = [1,2] 
+b = a
+</pre>
+Only <em>one</em> list exists </br>
+<pre>
+a.append(200) 
+print b  // [1,2,200] 
+</pre> </br>
+<li> 
+<pre>
+a=257
+b=257 
+a is b //False 
+</pre>
+
+Only if the var was <strong>less than </strong>257 then they are True as the compiler stores their address in the same location for efficiency</br> <li> 
+              Names in python have no type [They live on the <strong>heap</strong>] </br> <li> Values in python have no scope [They libe on the <strong> stack</strong>]
+        </span></ol>
+</p>

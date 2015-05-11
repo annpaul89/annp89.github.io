@@ -1,0 +1,26 @@
+---
+layout: post
+title: Three pointers in writing reusable python code
+date: April 9, 2015
+date_title: april-9-2015
+day: 9
+month: 4
+year: 2015
+---
+<!-- MAIN CONTENT -->
+
+  
+
+	<h3>More Functions better than classes.</h3>
+	<p> Functions that share the same state can live in a class.</br>
+
+<strong>Smell an Anti-pattern:</strong> When there's only one <em>public</em> function in a class, the class can be removed and the function can be a global function.
+</p>
+<h3>Functions <strong>ARE NOT</strong> Procedures</h3> 
+<strong>Rule of thumb: </strong>Function should should either return computed stuff or have a side-effect by mutating what it was passed </br> 
+<strong>Smell an Anti-pattern:</strong> Replace chars and return no of chars replaced
+
+<h3>Don’t try solve everything </h3>
+All edge cases/ all future cases </br>
+Base function on use-case agreed to solve</br>
+Testing smaller modules(functions) is much easy. So test, test, test!

@@ -1,0 +1,31 @@
+---
+layout: post
+title: Use numpy functions instead of loops in python
+date: March 6, 2015
+date_title: march-6-2015
+day: 6
+month: 3
+year: 2015
+---
+<!-- MAIN CONTENT --><p>
+<h3>Ufuncs – operates element wise on arrays </h3>
+<pre>
+Q = np.array(py_list) 
+b = Q+5 
+returns //overloaded result
+</pre>
+<h3>Aggregations</h3>
+Use  summary fns <code >min, max, sum, mean, nanmin, argmin </code>
+<h3>Masking</h3>
+<pre>
+mask = Q &lt; 4 
+Q[mask]
+returns //a sliced array with values less than 4
+</pre>
+<h3>Indexing</h3>
+<pre>
+ind = [1,2,8] 
+Q[ind] 
+returns //an array with those indexes only
+</pre>
+</p>

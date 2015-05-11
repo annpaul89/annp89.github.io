@@ -1,0 +1,50 @@
+---
+layout: post
+title: Writing effective functions
+date: April 2, 2015
+date_title: april-2-2015
+day: 2
+month: 4
+year: 2015
+---
+<!-- MAIN CONTENT -->
+
+<p>
+<h3>For readability </h3>
+<ol>
+<li>Use variable arguments where possible e.g. <code>def foo(*args) </code></li>
+<li>Use <code>foo(*arg_list)</code> when calling function<code>foo</code> which unpacks the list of arguments.</li>
+<li>Specify keyword arguments when changing default values in a function call rather than positional defaults.</li>
+<ul>
+<li>def foo(a,b, c=10, d=True)  So, when you call it foo(3,4, c=20,d=False).</li>
+</ul>
+<li><em>Python 3</em> syntactically can force keyword only arguments by using * as one of the arguments, enforcing all the arguments that follow to be keyword only</li>
+<ul>
+<li>def foo(a,b,*,  c=10, d=True)  Python 3 syntax– force keyword-only args.
+</li>
+</ul>
+</ol>
+</p>
+<p>
+<h3>For performance:</h3>
+Return generators rather than a list. Few <em>advantages</em>:
+<ul><li>No memory running out issue</li><li> Less lines of code </li><li> More readable</li>
+<pre>
+	def load(cities): 
+		<strike>out = [] </strike>
+		for city in cities:
+			<strike>out.append(city)</strike>
+		return out 
+</pre>
+Replace the lines struck out with, <code>
+	yield city  </code>.
+In the first implementation, you would get all the cities by:
+<pre>
+	result = load(cities) 
+	print result
+</pre> 
+And the second, we wouldnt need to store all the cities in memory. Instead you would use it as needed by calling it as follows:
+<pre>
+print next(result)
+</pre>
+</p>
