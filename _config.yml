@@ -4,7 +4,7 @@ email: ann@prismskylabs.com
 description: > # this means to ignore newlines until "baseurl:"
   I blog about my coding experiences in Python, Django, Math, SQL, algorithms.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "https://annp89.github.io" # the base hostname & protocol for your site
+url: "https://annpaul89.github.io" # the base hostname & protocol for your site
 twitter_username: annp89
 github_username:  annp89
 
